@@ -22,7 +22,7 @@
 
     - name: Copy the Salesforce clone HTML file
       copy:
-        src: /home/ubuntu/salesforce-clone/index.html
+        src: /path/to/index.html
         dest: /var/www/html/index.html
       become: true
       become_user: root
