@@ -1,0 +1,34 @@
+---
+- name: Deploy Salesforce Clone App on Ubuntu Servers
+  hosts: servers
+  become: yes
+
+  tasks:
+
+    - name: Update the package list
+      apt: 
+        update_cache: yes
+
+    - name: Install Nginx web server
+      apt: 
+        name: nginx
+        state: present
+
+    - name: Start and enable Nginx service
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Copy the Salesforce clone HTML file
+      copy:
+        src: /home/ubuntu/salesforce-clone/index.html
+        dest: /var/www/html/index.html
+      become: true
+      become_user: root
+      become_method: sudo
+
+    - name: Restart Nginx to apply changes
+      systemd:
+        name: nginx
+        state: restarted
